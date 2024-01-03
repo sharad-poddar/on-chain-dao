@@ -18,7 +18,7 @@ contract MarketPlace is CryptoDevsNFT{
     }
 
     ///@dev getting price of nft
-    function getPrice() extenal view returns(uint256){
+    function getPrice() external view returns(uint256){
         return nftPrice;
     }
 

@@ -4,7 +4,7 @@ require('dotenv').config();
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
   solidity: {
-    compilers: [{value: "0.8.19"}, {value: "0.8.20"}],
+    compilers: [{version: "0.8.19"}, {version: "0.8.20"}],
   },
   networks: {
     mumbai:{

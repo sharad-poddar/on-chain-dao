@@ -88,9 +88,9 @@ contract CryptoDevsDao is Ownable{
         _;
     }
 
-    function voteOnProposal(uint256 _proposalIndex) external nftHolderOnly() activePropsal(_proposalIndex){
+    function voteOnProposal(uint256 _proposalIndex, Vote vote) external nftHolderOnly() activePropsal(_proposalIndex){
 
-        Proposal storage proposal = proposals[proposalIndex];
+        Proposal storage proposal = proposals[_proposalIndex];
         uint256 voterNFTBalance = cryptoDevs.balanceOf(msg.sender);
         uint256 numVotes;
 
@@ -105,7 +105,7 @@ contract CryptoDevsDao is Ownable{
 
         // selection of votes
         require(numVotes > 0, 'you have already voted');
-        if(vote == vote.YAY){
+        if(vote == Vote.YAY){
             proposal.yseVotes+=numVotes;
         }else{
             proposal.noVotes+=numVotes;
