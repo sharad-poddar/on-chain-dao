@@ -17,7 +17,7 @@ const main = async() => {
   await marketPlaceContractDeploy.wait;
   console.log('address of CryptoDevsNFTDeploy ::: ', marketPlaceContractDeploy.target);
 
-  const amount = hre.ethers.parseEther("1"); // You can change this value from 1 ETH to something else
+  const amount = hre.ethers.parseEther("0.1"); // You can change this value from 1 ETH to something else
 
   const daoContract = await hre.ethers.getContractFactory('CryptoDevsDao');
   const daoContractDeploy = await daoContract.deploy(marketPlaceContractDeploy.target, nftContractDeploy.target, {value: amount});
@@ -53,10 +53,21 @@ const main = async() => {
 
 const runMain = async() => {
   try{
-    main();
+    await main();
     process.exit(0);
   }catch(error){
     console.log('erro -> ',error);
     process.exit(1);
   }
 }
+
+runMain();
+
+
+// address of CryptoDevsNFTDeploy :::  0x82444370D9d5cC4D60D1B03838AE56D7B166A907
+// address of marketplace :::  0x11321cfAFDff039371F35b27065C9f8E18915f3f
+// address of dao :::  0x9a3Fbe0A378d0022fA1c2D4a8C72D94347Ba5C3b
+
+// https://mumbai.polygonscan.com/address/0x82444370D9d5cC4D60D1B03838AE56D7B166A907#code
+// https://mumbai.polygonscan.com/address/0x11321cfAFDff039371F35b27065C9f8E18915f3f#code
+// https://mumbai.polygonscan.com/address/0x9a3Fbe0A378d0022fA1c2D4a8C72D94347Ba5C3b#code
