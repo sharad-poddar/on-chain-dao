@@ -64,10 +64,10 @@ const runMain = async() => {
 runMain();
 
 
-// address of CryptoDevsNFTDeploy :::  0x82444370D9d5cC4D60D1B03838AE56D7B166A907
-// address of marketplace :::  0x11321cfAFDff039371F35b27065C9f8E18915f3f
-// address of dao :::  0x9a3Fbe0A378d0022fA1c2D4a8C72D94347Ba5C3b
+// address of CryptoDevsNFTDeploy :::  0x90eCfeAD9E74AAe64ab9B2670F485010Aa2bDc3a
+// address of marketplace :::  0x2fE848951eba770FD08AD33Fc8CF3d6B9598c2B2
+// address of dao :::  0xfAd42084160a21fB872c580F90DB7bBb4A8E805a
 
-// https://mumbai.polygonscan.com/address/0x82444370D9d5cC4D60D1B03838AE56D7B166A907#code
-// https://mumbai.polygonscan.com/address/0x11321cfAFDff039371F35b27065C9f8E18915f3f#code
-// https://mumbai.polygonscan.com/address/0x9a3Fbe0A378d0022fA1c2D4a8C72D94347Ba5C3b#code
+// https://mumbai.polygonscan.com/address/0x90eCfeAD9E74AAe64ab9B2670F485010Aa2bDc3a#code
+// https://mumbai.polygonscan.com/address/0x2fE848951eba770FD08AD33Fc8CF3d6B9598c2B2#code
+// https://mumbai.polygonscan.com/address/0xfAd42084160a21fB872c580F90DB7bBb4A8E805a#code

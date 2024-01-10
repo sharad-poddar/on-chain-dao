@@ -35,15 +35,10 @@ interface ICryptoDevsNFT {
 contract CryptoDevsDao is Ownable{
 
     struct Proposal{
-        // nft to be buy
         uint256 nftTokenId;
-        // deadline
         uint256 deadline;
-        // no of yes votes
         uint256 yseVotes;
-        // no of no votes
         uint256 noVotes;
-        // isExecuted
         bool executed;
         // voters, nft is used or not
         mapping(uint256 => bool) voters;
@@ -72,24 +67,30 @@ contract CryptoDevsDao is Ownable{
         _;
     }
 
+
+
+    ///@dev checking if the NFT is available or not
+    ///@dev setting up the propsal id and its deadline
+    ///@dev getting back the propsalId
     function createProposal(uint256 _subjectNFTTokenId) external nftHolderOnly returns(uint256){ 
         require(marketPlace.available(_subjectNFTTokenId), 'NFT already sold');
         Proposal storage proposal = proposals[numProposals];
         proposal.nftTokenId = _subjectNFTTokenId;
         proposal.deadline = block.timestamp + 5 minutes;
         numProposals++;
-        return numProposals -1;
+        return numProposals - 1;
     }
 
-    // Create a modifier which only allows a function to be
-    // called if the given proposal's deadline has not been exceeded yet
+
+    ///@notice for checking it the proposal is active or not 
     modifier activePropsal(uint256 _propsalIndex){
         require(proposals[_propsalIndex].deadline > block.timestamp, "DEADLINE_EXCEEDED");
         _;
     }
 
-    function voteOnProposal(uint256 _proposalIndex, Vote vote) external nftHolderOnly() activePropsal(_proposalIndex){
 
+    ///@notice voting on propsal if proposal is active and only for nftHolder person
+    function voteOnProposal(uint256 _proposalIndex, Vote vote) external nftHolderOnly() activePropsal(_proposalIndex){
         Proposal storage proposal = proposals[_proposalIndex];
         uint256 voterNFTBalance = cryptoDevs.balanceOf(msg.sender);
         uint256 numVotes;
@@ -110,33 +111,29 @@ contract CryptoDevsDao is Ownable{
         }else{
             proposal.noVotes+=numVotes;
         }
-
     }
 
 
-    // Create a modifier which only allows a function to be
-    // called if the given proposals' deadline HAS been exceeded
-    // and if the proposal has not yet been executed
+    ///@notice checking if the proposal become inActive and unexecuted proposal
     modifier inactiveProposalOnly(uint256 proposalIndex){
         require(proposals[proposalIndex].deadline <= block.timestamp, 'there is time in proposal deadline');
         require(proposals[proposalIndex].executed == false, 'already executed');
         _;
     }
 
-    /// @dev executeProposal allows any CryptoDevsNFT holder to execute a proposal after it's deadline has been exceeded
+
+    ///@notice executeProposal allows any CryptoDevsNFT holder to execute a proposal after it's deadline has been exceeded
     function executeProposal(uint256 _proposalIndex) external nftHolderOnly() inactiveProposalOnly(_proposalIndex){
         Proposal storage proposal = proposals[_proposalIndex];
-
-        // If the proposal has more YAY votes than NAY votes
-        // purchase the NFT from the FakeNFTMarketplace
         if(proposal.yseVotes > proposal.noVotes){
             uint256 nftPrice = marketPlace.getPrice();
-            require(address(this).balance >= nftPrice, 'community dont have enough fund');
+            require(address(this).balance >= nftPrice, 'community dosnt have sufficient fund');
             marketPlace.purchase{value: nftPrice}(proposal.nftTokenId);
         }
-
         proposal.executed = true;
     }
+
+
 
     /// @dev withdrawEther allows the contract owner (deployer) to withdraw the ETH from the contract
     function withdrawEther() external onlyOwner {
@@ -145,6 +142,7 @@ contract CryptoDevsDao is Ownable{
         (bool sent, ) = payable(owner()).call{value: amount}("");
         require(sent, "FAILED_TO_WITHDRAW_ETHER");
     }
+
 
 
     // The following two functions allow the contract to accept ETH deposits

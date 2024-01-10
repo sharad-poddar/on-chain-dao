@@ -12,7 +12,9 @@ contract CryptoDevsNFT is ERC721Enumerable{
 
     ///@notice _safeMint function in ERC721 to mint NFT
     ///@dev  totalSupply() Returns the total amount of tokens stored by the contract.
-    function mint() public{
+    ///@dev only way to fund the community
+    function mint() public payable{
+        require(msg.value == 0.2 ether, 'insufficent ethers');
         _safeMint(msg.sender, totalSupply());
     }
 
